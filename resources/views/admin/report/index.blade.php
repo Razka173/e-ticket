@@ -14,10 +14,10 @@
     {{-- BEGIN MAIN ROW --}}
     <div class="row">
       <div class="col-12">
-        <div class="card">
+        <div class="card card-yellow">
           {{-- BEGIN CARD HEADER --}}
           <div class="card-header">
-            <h3 class="card-title">{{ $tableName }}</h3>
+            <h3 class="card-title">{{ isset($firstTableName) ? $firstTableName : 'Tabel' }}</h3>
             <div class="card-tools">
               <!-- This will cause the card to maximize when clicked -->
               <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
@@ -36,7 +36,6 @@
                   <th>Email</th>
                   <th>Waktu Pembelian</th>
                   <th>Status</th>
-                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,16 +48,11 @@
                       <td>{{ isset($ticket->created_at) ? \Carbon\Carbon::parse($ticket->created_at)->diffForHumans() : '-' }}</td>
                       <td>
                         @if ($ticket->is_valid == 0)
-                          <span class="badge badge-success">Tiket belum digunakan</span>
+                          <span class="badge badge-warning">Tiket belum digunakan</span>
                         @endif
                         @if ($ticket->is_valid == 1)
-                          <span class="badge badge-danger">Tiket sudah digunakan</span>
+                          <span class="badge badge-success">Tiket sudah digunakan</span>
                         @endif
-                      </td>
-                      <td>
-                        {{-- <a href="{{ route('admin.user.edit', $ticket->id) }}" class="btn btn-sm btn-warning mb-1 col-12"><i class="fa fa-edit"></i> Edit </a> --}}
-                        <a href="{{ route('admin.ticket.edit', $ticket->id) }}" value="{{ $ticket->id }}" class="btn btn-sm btn-warning mb-1 col-12 edit-button"><i class="fa fa-edit"></i> Edit</a>
-                        <button value="{{ $ticket->id }}" class=" btn btn-sm btn-danger mb-1 col-12 delete-button"><i class="fa fa-trash"></i> Hapus</button>
                       </td>
                     </tr>
                   @endforeach
@@ -87,6 +81,76 @@
       </div>
     </div>
     {{-- END MAIN ROW --}}
+    {{-- BEGIN SECOND ROW --}}
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-green">
+          {{-- BEGIN CARD HEADER --}}
+          <div class="card-header">
+            <h3 class="card-title">{{ isset($secondTableName) ? $secondTableName : 'Tabel' }}</h3>
+            <div class="card-tools">
+              <!-- This will cause the card to maximize when clicked -->
+              <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
+              <!-- This will cause the card to collapse when clicked -->
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+          </div>
+          {{-- END CARD HEADER --}}
+          {{-- BEGIN CARD BODY --}}
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-wrap">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Nama Lengkap</th>
+                  <th>Email</th>
+                  <th>Waktu Pembelian</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if ($checkedTickets->count() > 0)
+                  @foreach ($checkedTickets as $index => $ticket)
+                    <tr>
+                      <td>{{ $index + 1 + ($checkedTickets->currentPage() - 1) * $checkedTickets->perPage() }}</td>
+                      <td>{{ $ticket->name }}</td>
+                      <td>{{ $ticket->email }}</td>
+                      <td>{{ isset($ticket->created_at) ? \Carbon\Carbon::parse($ticket->created_at)->diffForHumans() : '-' }}</td>
+                      <td>
+                        @if ($ticket->is_valid == 0)
+                          <span class="badge badge-success">Tiket belum digunakan</span>
+                        @endif
+                        @if ($ticket->is_valid == 1)
+                          <span class="badge badge-success">Tiket sudah digunakan</span>
+                        @endif
+                      </td>
+                    </tr>
+                  @endforeach
+                @else
+                  <tr>
+                    <td class="text text-center" colspan="6">No Data.</td>
+                  </tr>
+                @endif
+              </tbody>
+            </table>
+          </div>
+          {{-- END CARD BODY --}}
+          {{-- BEGIN CARD FOOTER --}}
+          <div class="card-footer">
+            <div class="row d-flex justify-content-start mb-2">
+              <h6 class="col-12">Halaman : {{ $checkedTickets->currentPage() }}</h6>
+              <h6 class="col-12">Jumlah Data : {{ $checkedTickets->total() }}</h6>
+              <h6 class="col-12">Data Per Halaman : {{ $checkedTickets->perPage() }}</h6>
+            </div>
+            <div class="row d-flex justify-content-start">
+              {{ $checkedTickets->links() }}
+            </div>
+          </div>
+          {{-- END CARD FOOTER --}}
+        </div>
+      </div>
+    </div>
+    {{-- END SECOND ROW --}}
   </div>
 @endsection
 

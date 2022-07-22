@@ -20,9 +20,9 @@
     {{-- End Hasil Kuesioner --}}
     {{-- BEGIN FILE --}}
     <li class="nav-item">
-      <a href="@if (Route::has('admin.guest.report')) {{ route('admin.guest.report') }} @else # @endif" class="nav-link {{ $active == 'file' ? 'active' : '' }}">
-        <i class="nav-icon fas fa-list"></i>
-        <p>Report</p>
+      <a href="@if (Route::has('admin.report.index')) {{ route('admin.report.index') }} @else # @endif" class="nav-link {{ $active == 'report' ? 'active' : '' }}">
+        <i class="nav-icon fas fa-book"></i>
+        <p>Laporan</p>
       </a>
     </li>
     {{-- END FILE --}}
