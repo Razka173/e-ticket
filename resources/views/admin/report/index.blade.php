@@ -58,7 +58,7 @@
                   @endforeach
                 @else
                   <tr>
-                    <td class="text text-center" colspan="6">No Data.</td>
+                    <td class="text text-center" colspan="100">No Data.</td>
                   </tr>
                 @endif
               </tbody>
@@ -128,7 +128,7 @@
                   @endforeach
                 @else
                   <tr>
-                    <td class="text text-center" colspan="6">No Data.</td>
+                    <td class="text text-center" colspan="100">No Data.</td>
                   </tr>
                 @endif
               </tbody>
@@ -161,62 +161,4 @@
 @endsection
 
 @push('page_scripts')
-  {{-- BEGIN DELETE SCRIPT --}}
-  <script>
-    jQuery(document).ready(function() {
-      jQuery('.delete-button').on('click', function() {
-        var titleText = 'Hapus Tiket'
-        var descText = 'Data tiket akan di hapus, apakah anda yakin?'
-        var iconType = 'question'
-        var confText = 'Ya'
-        var urlTarget = "{{ url('admin/ticket/delete') }}"
-        var titleTextSuccess = 'Yeayy!'
-        var descTextSuccess = 'Anda berhasil hapus data tiket pengunjung'
-        var iconTypeSuccess = 'success'
-        var titleTextFailed = 'Gagal Hapus Tiket'
-        var descTextFailed = 'Maaf, coba lagi nanti!'
-        var iconTypeFailed = 'error'
-        Swal.fire({
-          title: titleText,
-          text: descText,
-          icon: iconType,
-          showCancelButton: true,
-          cancelButtonColor: '#d33',
-          confirmButtonText: confText,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            var id = jQuery(this).val();
-            jQuery.ajax({
-              url: urlTarget,
-              method: "DELETE",
-              data: {
-                "_token": "{{ csrf_token() }}",
-                'id': id,
-              },
-              success: function(response) {
-                Swal.fire({
-                  title: titleTextSuccess,
-                  text: descTextSuccess,
-                  icon: iconTypeSuccess,
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    window.location.reload();
-                  };
-                });
-              },
-              error: function(XMLHttpRequest, textStatus, errorThrown) {
-                var text = jQuery.parseJSON(XMLHttpRequest.responseText);
-                Swal.fire({
-                  title: titleTextFailed,
-                  text: descTextFailed,
-                  icon: iconTypeFailed,
-                });
-              },
-            });
-          };
-        });
-      });
-    });
-  </script>
-  {{-- END DELETE SCRIPT --}}
 @endpush
