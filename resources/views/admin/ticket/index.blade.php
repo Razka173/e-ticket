@@ -56,7 +56,7 @@
                     </td>
                     <td>
                       {{-- <a href="{{ route('admin.user.edit', $ticket->id) }}" class="btn btn-sm btn-warning mb-1 col-12"><i class="fa fa-edit"></i> Edit </a> --}}
-                      <button value="{{ $ticket->id }}" class="btn btn-sm btn-warning mb-1 col-12 edit-button"><i class="fa fa-edit"></i> Edit</button>
+                      <a href="{{ route('admin.ticket.edit', $ticket->id) }}" value="{{ $ticket->id }}" class="btn btn-sm btn-warning mb-1 col-12 edit-button"><i class="fa fa-edit"></i> Edit</a>
                       <button value="{{ $ticket->id }}" class=" btn btn-sm btn-danger mb-1 col-12 delete-button"><i class="fa fa-trash"></i> Hapus</button>
                     </td>
                   </tr>

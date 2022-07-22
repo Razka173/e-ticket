@@ -43,4 +43,48 @@ class TicketController extends Controller
             ], 404);
         }
     }
+
+    public function edit($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        $data = array(
+            'title' => 'Edit User',
+            'ticket' => $ticket,
+            'active' => 'ticket',
+        );
+        return view('admin.ticket.edit', $data);
+    }
+
+    // admin.user.update
+    public function update(Request $request, $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        $this->validate($request, [
+            'name'      => 'required',
+            'email'     => 'required|email',
+        ]);
+
+        $ticket->name = $request->name;
+        $ticket->email = $request->email;
+
+        $saved = $ticket->save();
+
+
+        if ($saved) {
+            return redirect()
+                ->route('admin.ticket.index')
+                ->with([
+                    'success' => 'Tiket pengunjung berhasil di update'
+                ]);
+        } else {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with([
+                    'error' => 'Tiket gagal di update, coba lagi nanti'
+                ]);
+        }
+    }
 }
